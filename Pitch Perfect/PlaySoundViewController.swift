@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import AVFoundation
 class PlaySoundViewController: UIViewController {
 
     @IBOutlet weak var slowButton:UIButton!
@@ -21,6 +21,7 @@ class PlaySoundViewController: UIViewController {
     
     
     var playSoundURL:URL!
+    var audioFile:AVAudioFile!
     override func viewDidLoad() {
         super.viewDidLoad()
         print (playSoundURL)
