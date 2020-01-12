@@ -9,11 +9,27 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var recordLabel:UILabel!
+    
+    @IBOutlet weak var recordButton:UIButton!
+    @IBOutlet weak var stopRecordingButton:UIButton!
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+       
     }
+    
+    
+    @IBAction func startRecording (_ sender: UIButton){
+        print ("Start recording action fired")
+    }
+    
+    @IBAction func stopRecording (_ sender: UIButton){
+        print ("Stop recording action fired.")
+    }
+   
 
 
 }
