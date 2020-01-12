@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class ViewController: UIViewController {
+import AVFoundation
+class ViewController: UIViewController , AVAudioRecorderDelegate {
     
     @IBOutlet weak var recordLabel:UILabel!
     
@@ -17,7 +17,12 @@ class ViewController: UIViewController {
     
     let recordingStr = "Recording..."
     let finishedRecordingStr = "Press the record button"
-   
+
+    
+    var audioRecorder:AVAudioRecorder!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -34,6 +39,8 @@ class ViewController: UIViewController {
         recordButton.isEnabled = false
         stopRecordingButton.isEnabled = true
         recordLabel.text = recordingStr
+        
+        doRecording()
     }
     
     @IBAction func stopRecording (_ sender: UIButton){
@@ -41,9 +48,37 @@ class ViewController: UIViewController {
         recordButton.isEnabled = true
         stopRecordingButton.isEnabled = false
         recordLabel.text = finishedRecordingStr
+        
+        audioRecorder.stop()
+        let session = AVAudioSession.sharedInstance()
+        try! session.setActive(false)
+    }
+    
+    func doRecording(){
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        
+        let fileName = "recordedSound.wav"
+        let fullPath = [path , fileName]
+        let url = URL(string: fullPath.joined(separator: "/"))
+        
+        let session = AVAudioSession.sharedInstance()
+        try! session.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options: AVAudioSession.CategoryOptions.defaultToSpeaker)
+        
+        try! audioRecorder = AVAudioRecorder(url: url!, settings: [:])
+        audioRecorder.delegate = self
+        audioRecorder.isMeteringEnabled = true
+        audioRecorder.prepareToRecord()
+        audioRecorder.record()
     }
    
 
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag{
+            print ("Finished recording successfully.")
+        }else {
+            print ("Failed to record.")
+        }
+    }
 
 }
 
