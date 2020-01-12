@@ -19,9 +19,11 @@ class PlaySoundViewController: UIViewController {
     
     @IBOutlet weak var stopButton:UIButton!
     
+    
+    var playSoundURL:URL!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print (playSoundURL)
         // Do any additional setup after loading the view.
     }
     
