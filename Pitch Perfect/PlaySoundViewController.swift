@@ -22,6 +22,11 @@ class PlaySoundViewController: UIViewController {
     
     var playSoundURL:URL!
     var audioFile:AVAudioFile!
+    var audioEnging:AVAudioEngine!
+    var audioPlayerNode:AVAudioPlayerNode!
+    var stopTimer:Timer!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print (playSoundURL)

@@ -21,8 +21,6 @@ class ViewController: UIViewController , AVAudioRecorderDelegate {
     
     var audioRecorder:AVAudioRecorder!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
        
