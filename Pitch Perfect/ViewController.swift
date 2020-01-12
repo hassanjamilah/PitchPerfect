@@ -26,12 +26,13 @@ class ViewController: UIViewController , AVAudioRecorderDelegate {
        
     }
     
+    //MARK: Disable the stop recording button before appearing on the screen
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stopRecordingButton.isEnabled = false ;
     }
     
-    
+    //MARK: This action is fired when we click on the recording button
     @IBAction func startRecording (_ sender: UIButton){
         print ("Start recording action fired")
         recordButton.isEnabled = false
@@ -41,17 +42,17 @@ class ViewController: UIViewController , AVAudioRecorderDelegate {
         doRecording()
     }
     
+    //MARK: stop the recording operation
     @IBAction func stopRecording (_ sender: UIButton){
         print ("Stop recording action fired.")
         recordButton.isEnabled = true
         stopRecordingButton.isEnabled = false
         recordLabel.text = finishedRecordingStr
         
-        audioRecorder.stop()
-        let session = AVAudioSession.sharedInstance()
-        try! session.setActive(false)
+       stopRecording()
     }
     
+    //MARK: do the recording operation
     func doRecording(){
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         
@@ -69,7 +70,14 @@ class ViewController: UIViewController , AVAudioRecorderDelegate {
         audioRecorder.record()
     }
    
+    //MARK: stop the recording.
+    func stopRecording(){
+               audioRecorder.stop()
+               let session = AVAudioSession.sharedInstance()
+               try! session.setActive(false)
+    }
 
+    //MARK: This method is to launch the second view controller after we ensure that the sound file is saved
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag{
             print ("Finished recording successfully.")
@@ -79,7 +87,7 @@ class ViewController: UIViewController , AVAudioRecorderDelegate {
         }
     }
 
-    
+    //MARK: This is for preparing and passing the url to the next view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
         if segue.identifier  == "gotoPlaySoundSegue"{

@@ -9,17 +9,19 @@
 import UIKit
 import AVFoundation
 extension PlaySoundViewController:AVAudioPlayerDelegate{
+    
+    //MARK: Prepare the alerts messages
     struct Alerts {
-         static let DismissAlert = "Dismiss"
-               static let RecordingDisabledTitle = "Recording Disabled"
-               static let RecordingDisabledMessage = "You've disabled this app from recording your microphone. Check Settings."
-               static let RecordingFailedTitle = "Recording Failed"
-               static let RecordingFailedMessage = "Something went wrong with your recording."
-               static let AudioRecorderError = "Audio Recorder Error"
-               static let AudioSessionError = "Audio Session Error"
-               static let AudioRecordingError = "Audio Recording Error"
-               static let AudioFileError = "Audio File Error"
-               static let AudioEngineError = "Audio Engine Error"
+        static let DismissAlert = "Dismiss"
+        static let RecordingDisabledTitle = "Recording Disabled"
+        static let RecordingDisabledMessage = "You've disabled this app from recording your microphone. Check Settings."
+        static let RecordingFailedTitle = "Recording Failed"
+        static let RecordingFailedMessage = "Something went wrong with your recording."
+        static let AudioRecorderError = "Audio Recorder Error"
+        static let AudioSessionError = "Audio Session Error"
+        static let AudioRecordingError = "Audio Recording Error"
+        static let AudioFileError = "Audio File Error"
+        static let AudioEngineError = "Audio Engine Error"
         
     }
     
@@ -28,7 +30,7 @@ extension PlaySoundViewController:AVAudioPlayerDelegate{
         case playing , notPlaying
     }
     
-    
+    //MARK: Setup and prepare the audio file for playing
     func setupAudio(){
         do{
             audioFile = try AVAudioFile(forReading: playSoundURL as URL)
@@ -39,7 +41,7 @@ extension PlaySoundViewController:AVAudioPlayerDelegate{
         }
     }
     
-    
+    //MARK: Play the sound with the selected options
     func playSound(rate: Float? = nil , pitch: Float? = nil ,
                    echo: Bool?=false , reverb: Bool? = false 
     ){
@@ -77,65 +79,66 @@ extension PlaySoundViewController:AVAudioPlayerDelegate{
         }else {
             connectAudioNodes(audioPlayerNode , changeAudioPitchNode , audioEnging.outputNode)
         }
-
+        
         audioPlayerNode.stop()
         audioPlayerNode.scheduleFile(audioFile, at: nil){
             
             
             var delayInSeconds: Double = 0
-                       
-                       if let lastRenderTime = self.audioPlayerNode.lastRenderTime, let playerTime = self.audioPlayerNode.playerTime(forNodeTime: lastRenderTime) {
-                           
-                           if let rate = rate {
-                               delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate) / Double(rate)
-                           } else {
-                               delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate)
-                           }
-                       }
-                       
-                       // schedule a stop timer for when audio finishes playing
-                       self.stopTimer = Timer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundViewController.stopAudio), userInfo: nil, repeats: false)
+            
+            if let lastRenderTime = self.audioPlayerNode.lastRenderTime, let playerTime = self.audioPlayerNode.playerTime(forNodeTime: lastRenderTime) {
+                
+                if let rate = rate {
+                    delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate) / Double(rate)
+                } else {
+                    delayInSeconds = Double(self.audioFile.length - playerTime.sampleTime) / Double(self.audioFile.processingFormat.sampleRate)
+                }
+            }
+            
+            // schedule a stop timer for when audio finishes playing
+            self.stopTimer = Timer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundViewController.stopAudio), userInfo: nil, repeats: false)
             RunLoop.main.add(self.stopTimer, forMode: RunLoop.Mode.default)
         }
         do {
-                   try audioEnging.start()
-               } catch {
-                showAlert(Alerts.AudioEngineError, String(describing: error))
-                   return
-               }
-               
-               // play the recording!
-               audioPlayerNode.play()
+            try audioEnging.start()
+        } catch {
+            showAlert(Alerts.AudioEngineError, String(describing: error))
+            return
+        }
+        
+        // play the recording!
+        audioPlayerNode.play()
         
     }
     
+    //MARK: Prepare and connect the options of playing
     func connectAudioNodes(_ nodes: AVAudioNode...){
         for x in 0..<nodes.count - 1{
             audioEnging.connect(nodes[x], to: nodes[x+1], format: audioFile.processingFormat)
         }
     }
     
-   
+    //MARK: Stop the playing and release the resources
     @objc func stopAudio() {
-           
-           if let audioPlayerNode = audioPlayerNode {
-               audioPlayerNode.stop()
-           }
-           
-           if let stopTimer = stopTimer {
-               stopTimer.invalidate()
-           }
-           
-           configureUI(.notPlaying)
-                           
-           if let audioEngine = audioEnging {
-               audioEngine.stop()
-               audioEngine.reset()
-           }
-       }
+        
+        if let audioPlayerNode = audioPlayerNode {
+            audioPlayerNode.stop()
+        }
+        
+        if let stopTimer = stopTimer {
+            stopTimer.invalidate()
+        }
+        
+        configureUI(.notPlaying)
+        
+        if let audioEngine = audioEnging {
+            audioEngine.stop()
+            audioEngine.reset()
+        }
+    }
     
     
-    
+    //MARK: Enable and disable button upon the state of playing
     func configureUI(_ playState: playingState) {
         switch(playState) {
         case .playing:
@@ -147,17 +150,17 @@ extension PlaySoundViewController:AVAudioPlayerDelegate{
         }
     }
     
-    
+    //MARK: Enable or disable the play buttons
     func setPlayButtonsEnabled(_ enabled: Bool) {
-        
-        
         slowButton.isEnabled = enabled
         speedButton.isEnabled = enabled
-           lowPitchButton.isEnabled = enabled
-           highPitchButton.isEnabled = enabled
-           echoButton.isEnabled = enabled
-           reverbButton.isEnabled = enabled
-       }
+        lowPitchButton.isEnabled = enabled
+        highPitchButton.isEnabled = enabled
+        echoButton.isEnabled = enabled
+        reverbButton.isEnabled = enabled
+    }
+    
+    //MARK: Show alert message when error occured
     func showAlert(_ title:String , _ message: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: title, style: .default, handler: nil))

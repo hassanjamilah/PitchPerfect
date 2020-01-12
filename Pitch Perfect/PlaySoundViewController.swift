@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 class PlaySoundViewController: UIViewController {
-
+    
     @IBOutlet weak var slowButton:UIButton!
     @IBOutlet weak var speedButton:UIButton!
     @IBOutlet weak var lowPitchButton:UIButton!
@@ -30,19 +30,19 @@ class PlaySoundViewController: UIViewController {
         case slow = 0  , speed , lowPitch , highPitch , reverbed , echoed
     }
     
+    //MARK: Prepare the audio file for playing
     override func viewDidLoad() {
         super.viewDidLoad()
-        print (playSoundURL)
-        // Do any additional setup after loading the view.
         setupAudio()
     }
     
-    
+    //MARK: Disable the stop button before appearing on the screen
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         stopButton.isEnabled = false
     }
     
+    //MARK: This action is fired when one of the play buttons is clicked
     @IBAction func playSound(_ sender: UIButton){
         print ("Play sound fired.")
         switch (playMode(rawValue: sender.tag)!){
@@ -50,7 +50,7 @@ class PlaySoundViewController: UIViewController {
             playSound(rate: 0.5)
         case .speed:
             playSound(rate: 1.5)
-       
+            
         case .lowPitch:
             playSound( pitch: -1000)
         case .highPitch:
@@ -63,19 +63,12 @@ class PlaySoundViewController: UIViewController {
         configureUI(.playing)
     }
     
+    //MARK: This action is fired when the stop playing button clicked
     @IBAction func stopPlaying(_ sender: UIButton){
         print ("Stop playing.")
         stopAudio()
+        configureUI(.notPlaying)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }
