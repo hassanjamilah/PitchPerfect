@@ -110,7 +110,7 @@ extension PlaySoundViewController:AVAudioPlayerDelegate{
     }
     
     func connectAudioNodes(_ nodes: AVAudioNode...){
-        for x in 0...nodes.count - 1{
+        for x in 0..<nodes.count - 1{
             audioEnging.connect(nodes[x], to: nodes[x+1], format: audioFile.processingFormat)
         }
     }

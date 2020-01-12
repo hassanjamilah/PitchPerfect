@@ -26,11 +26,15 @@ class PlaySoundViewController: UIViewController {
     var audioPlayerNode:AVAudioPlayerNode!
     var stopTimer:Timer!
     
+    enum playMode: Int{
+        case slow = 0  , speed , lowPitch , highPitch , reverbed , echoed
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print (playSoundURL)
         // Do any additional setup after loading the view.
+        setupAudio()
     }
     
     
@@ -41,10 +45,27 @@ class PlaySoundViewController: UIViewController {
     
     @IBAction func playSound(_ sender: UIButton){
         print ("Play sound fired.")
+        switch (playMode(rawValue: sender.tag)!){
+        case .slow:
+            playSound(rate: 0.5)
+        case .speed:
+            playSound(rate: 1.5)
+       
+        case .lowPitch:
+            playSound( pitch: -1000)
+        case .highPitch:
+            playSound( pitch: 1000)
+        case .reverbed:
+            playSound( reverb: true)
+        case .echoed:
+            playSound(echo: true)
+        }
+        configureUI(.playing)
     }
     
     @IBAction func stopPlaying(_ sender: UIButton){
         print ("Stop playing.")
+        stopAudio()
     }
 
     /*
