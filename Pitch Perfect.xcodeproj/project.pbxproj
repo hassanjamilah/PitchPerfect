@@ -13,6 +13,8 @@
 		CE18AE7E23CAC17A00D35FD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE18AE7C23CAC17A00D35FD0 /* Main.storyboard */; };
 		CE18AE8023CAC17C00D35FD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE18AE7F23CAC17C00D35FD0 /* Assets.xcassets */; };
 		CE18AE8323CAC17C00D35FD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE18AE8123CAC17C00D35FD0 /* LaunchScreen.storyboard */; };
+		CECA731F23CAD32C002760D8 /* PlaySoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA731E23CAD32C002760D8 /* PlaySoundViewController.swift */; };
+		CECA732123CADDCD002760D8 /* PlaySoundExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA732023CADDCD002760D8 /* PlaySoundExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		CE18AE7F23CAC17C00D35FD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE18AE8223CAC17C00D35FD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE18AE8423CAC17C00D35FD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CECA731E23CAD32C002760D8 /* PlaySoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySoundViewController.swift; sourceTree = "<group>"; };
+		CECA732023CADDCD002760D8 /* PlaySoundExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySoundExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +64,11 @@
 				CE18AE7823CAC17A00D35FD0 /* SceneDelegate.swift */,
 				CE18AE7A23CAC17A00D35FD0 /* ViewController.swift */,
 				CE18AE7C23CAC17A00D35FD0 /* Main.storyboard */,
+				CECA731E23CAD32C002760D8 /* PlaySoundViewController.swift */,
 				CE18AE7F23CAC17C00D35FD0 /* Assets.xcassets */,
 				CE18AE8123CAC17C00D35FD0 /* LaunchScreen.storyboard */,
 				CE18AE8423CAC17C00D35FD0 /* Info.plist */,
+				CECA732023CADDCD002760D8 /* PlaySoundExtension.swift */,
 			);
 			path = "Pitch Perfect";
 			sourceTree = "<group>";
@@ -140,6 +146,8 @@
 			files = (
 				CE18AE7B23CAC17A00D35FD0 /* ViewController.swift in Sources */,
 				CE18AE7723CAC17A00D35FD0 /* AppDelegate.swift in Sources */,
+				CECA732123CADDCD002760D8 /* PlaySoundExtension.swift in Sources */,
+				CECA731F23CAD32C002760D8 /* PlaySoundViewController.swift in Sources */,
 				CE18AE7923CAC17A00D35FD0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
